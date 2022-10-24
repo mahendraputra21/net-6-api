@@ -75,5 +75,15 @@ namespace ProductCrudAPI.Controllers
             return Ok();
 
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete()
+        {
+            var products = await _context.Products.ToListAsync();
+            if (products.Count == 0) return NotFound();
+            _context.Products.RemoveRange(products);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
