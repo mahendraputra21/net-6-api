@@ -36,7 +36,7 @@ namespace ProductCrudAPI.Controllers
         {
             _context.Add(product);
             await _context.SaveChangesAsync();
-            return Ok();
+            return Ok(product);
         }
 
         [HttpPut]
