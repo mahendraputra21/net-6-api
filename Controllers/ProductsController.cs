@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProductCrudAPI.Models;
 
+
 namespace ProductCrudAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -19,6 +20,15 @@ namespace ProductCrudAPI.Controllers
         public async Task<IEnumerable<Product>> Get()
         {
             return await _context.Products.ToListAsync();
+        }
+
+        [HttpGet("Search")]
+        public async Task<IActionResult> Search([FromQuery] string name)
+        {
+            var productsByName = await _context.Products.Where(x => x.Name.Contains(name)).ToListAsync();
+            if (!productsByName.Any())
+                return NotFound();
+            return Ok(productsByName);
         }
 
         [HttpGet("{id}")]
